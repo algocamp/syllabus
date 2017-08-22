@@ -1,6 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-* [Sorting](chapter1.md)
-* Merge Sort
+* [Sorting](sorting.md)
+* [Merge Sort](merge-sort.md)
 
