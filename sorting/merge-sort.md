@@ -1,48 +1,63 @@
 # Merge Sort
 
-Merge sort is a divide and conquer algorithm with 3 steps: divide, conquer, and merge.
+Merge sort is a divide and conquer algorithm. The purpose of dividing the input is to simplify the problem so that it can be solved efficiently.
+
+In the case of merge sort, the input list is divided until all the sublist are themselves sorted. As we don't know anything about the order of the list items, they must be divided into sub lists that each contain just a single (sorted!) value.
+
+## How it works
 
 To understand why it is necessary to first divide the input array, it helps to first learn how the merge step works.
 
-The merge function takes 3 arguments: `arrayToBeSorted`, `firstHalfOfArraySorted` and `secondHalfOfArraySorted`.
+A merge function takes 3 arguments: `listToBeSorted`, `firstHalfOfListSorted` and `secondHalfOfListSorted`.
 
 For example: `merge([4,2,5,6,1], [2,4,5], [1,6])`
 
-The 2 halves of `array` are merged in order. This operation can be performed in constant time because the 2 halves are already sorted. The `merge` function here steps through the input array in a single loop and at each iteration pulls the lowest number from the halves.
+Notice how the 2 halves are already sorted. When this is know the merge operation can be performed in a single iteration. The `merge` function steps through the input list and at each iteration pulls the lowest number from the one of the two halves.
 
-How then do we get the two halves sorted? This is where dividing comes into play. By dividing the input array into the smallest possible halves - 2 single digits - the two halves can be considered sorted, and therefore can be merged.
-
-To bring it altogether, `conquer`, using recursion, divides the array until it is small enough to merge, and merges until the original array is sorted.
-
-So in summary, we use:
-
-a) **Divide**: take an input array and divide it in half e.g. `[4,1,5,8,0] -> [[4,1,5], [0,8]]`
-
-and
-
-b) **Merge**: take 2 sorted halves and merge them into a sorted array:
 ```c
-[[1,4,5], [0,8]] -> [0,1,4,5,8]
+[4,2,5,6,1] [2,4,5] [1,6]
+ |           |       |
+
+[1,2,5,6,1] [2,4,5] [_,6]
+   |         |         |
+
+[1,2,5,6,1] [_,4,5] [_,6]
+     |         |       |
+
+[1,2,4,6,1] [_,_,5] [_,6]
+     |           |     |
+
+[1,2,4,5,1] [_,_,_] [_,6]
+         |             |
+
+[1,2,4,5,6] [_,_,_] [_,_] 👍
 ```
 
-To achieve:
+How then do we get the two halves sorted? This is where dividing comes into play. By dividing the input array into the smallest possible halves - a sublist with just a single value - the halves can be considered sorted, and therefore can be merged.
 
+To bring it all together (or conquer), we can write a recursive function `mergeSort` that, keeps dividing the input into sublists of a single item, then merges the sublists back together into a sorted array:
 
-**Conquer**: using recursion, keep dividing the halves until every halve is a single item, and then combine the halves together
 
 Divide:
 ```c
+[4,1,5,0,8]
 [[4,1,5], [0,8]]
 [[[4,1], [1]]], [[0], [[8]]]
 [[[[4],[1]], [1]]], [[0], [[8]]]
 ```
+
 Merge:
+
 ```c
 [[[[4],[1]], [1]]], [[0], [[8]]]
 [[[1, 4]], [1]], [[0, 8]]]
 [[1, 1, 4], [0, 8]]
 [0, 1, 1, 4, 8]]
 ```
+
+## Complexity
+
+Todo
 
 ## Practice
 
